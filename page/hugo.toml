@@ -1,4 +1,4 @@
-baseURL = 'https://blog.walkiewicz.io/'
+baseURL = 'https://walkiewicz.io/'
 title = "Adam's Tech Blog"
 theme = "coder"
 languageCode = 'en-us'
@@ -9,14 +9,14 @@ pagerSize = 20
 
 [services]
 [services.disqus]
-shortname = "ajwal"
+shortname = "adamwalkiewicz"
 
 [markup.highlight]
 style = "github-dark"
 
 [params]
   author = "Adam Walkiewicz"
-  info = "Software Development Engineer in Test and Python Enthusiasts"
+  info = "Software Development Engineer in Test and Python Enthusiast"
   description = "Adam Walkiewicz's personal website"
   keywords = "blog,tester,developer,personal"
   avatarurl = "images/profile.jpg"
@@ -26,10 +26,12 @@ style = "github-dark"
   favicon_32 = "/img/favicon-32x32.png"
   favicon_16 = "/img/favicon-16x16.png"
 
-  since = 2019
+  # License
+  since = 2025
+  license = "CC BY-NC-SA 4.0"
 
+  # Other
   enableTwemoji = true
-
   colorScheme = "auto"
   hidecolorschemetoggle = false
 

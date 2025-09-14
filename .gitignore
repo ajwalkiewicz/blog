@@ -26,10 +26,10 @@ go.work
 
 ### Hugo ###
 # Generated files by hugo
-public/
-resources/_gen/
-assets/jsconfig.json
-hugo_stats.json
+**/public/
+**/resources/_gen/
+**/assets/jsconfig.json
+**/hugo_stats.json
 
 # Executable may be added to repository
 hugo.exe
@@ -41,7 +41,7 @@ hugo.linux
 
 ### Obsidian ###
 # config dir
-.obsidian/
+# .obsidian/
 
 ### PyCharm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider

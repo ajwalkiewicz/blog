@@ -1,0 +1,13 @@
+{
+  "pdfExportSettings": {
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 50
+  },
+  "attachmentFolderPath": "_images",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "posts",
+  "useMarkdownLinks": false,
+  "alwaysUpdateLinks": true
+}

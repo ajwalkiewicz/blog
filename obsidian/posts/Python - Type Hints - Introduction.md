@@ -1,12 +1,15 @@
 ---
-title: Python Type Hints
-description:
+title: Python - Type Hints - Introduction
+description: My subjective introduction to Python type hints
 date: 2025-09-02T22:55:17+00:00
-draft: false
+draft: true
 tags:
   - python
+  - type-hints
 ---
-# Python Type Hints (Draft)
+# Intro
+
+TODO
 
 # History
 
@@ -69,9 +72,11 @@ message = greet("Alice", 30)
 #            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
 # TypeError: can only concatenate str (not "int") to str
 ```
+
 Python throws an error because it does not know how to reasonably perform operation on adding a number "age" to the string". In other words, how to change the bytes in the memory so it stores the data correctly*.
 
 \* That's not entirely true, more further in the article.
+
 # Python - dynamically typed language
 
 Programming languages traditionally divides on dynamically typed and statically typed languages. In dynamically typed languages the type of the variable is evaluated at runtime not before like it happens in statically typed languages.
@@ -81,6 +86,7 @@ Statically typed languages would not allow for such operation on the compilation
 But Python works a little bit different. Not only it checks the type during the runtime, but also, it executes the code, and then throw error. The fact that in previous example, there is an error, is because the implementation of the `int` and `str` objects does not allow for such use case. But this comparison does not happen on the "type" level - as there is not such thing like internal type that needs to match. It happens because both `int` and `str` implements the `__add__` method, where it is checked during runtime if the type of the other object allows for addition. 
 
 Purely academically, cause I see no practical usage of such case we can create our own `int` and `str` objects that allows for such behavior:
+
 ```python
 class Int(int):
 	def __add__(self, value: int | str) -> str | int: # type: ignore
@@ -154,6 +160,7 @@ animal_sound(cat) # Output: Meow!
 In this example it doesn't matter what class is being passed, as long as it implements `speak` method. We could create a `MagicCar` that implements `speak`, and it will work.
 
 This might sounds crazy, but in fact it is the core feature of Python. It allows for a lot of flexibility. But it can be a problem, when the passed object does not have required method implemented.
+
 ## EAFP vs. LBYL
 
 If we create a class `Car` that `honk` instead of `speak`, than we receive attribute error.
@@ -209,6 +216,7 @@ eafp_animal_sound(car) # Outputs: "Object cannot speak!"
 ```
 
 **EAFP** is generally considered to be more *Pythonic*, due to dynamic nature of Python. But which approach to take depends, on the situation. Raising an error consumes more resources, but performing every-time check in if-statement, also takes some time. Generally the rule of thumb is, to use **EAFP** when we don't expect to raise often an exception, cause in such case we don't waste time on if-statement check, but it we expect a wrong type or object to be passed often, thus exception raise would consume a lot of resources, then it is better to use **LBYL** approach with if-statement check.
+
 # Type hinting, type annotations, type checking and data validation.
 
 Before talking more about types and type hinting, we need to do a small distinction of what are type hints, type annotations and type checking.
@@ -218,8 +226,7 @@ So type hinting refers to all sorts of information about the types in the progra
 Annotations is the sub-type of the type hinting that refers only to the special syntax, where after a colon we write the type of the parameter or variable. And after an arrow symbol "->" and before the colon in the function to show what type it is returning. Because of that type hints and annotations are often used interchangeably. 
 
 It is worth to mention that annotations were introduced in Python 3.5 with the famous [PEP-484](https://peps.python.org/pep-0484/)
-
-![PEP-484](/posts/20250901085342.png)
+![[Pasted image 20250901085342.png]]
 
 Example of type hints and annotations.
 ```python
@@ -284,19 +291,21 @@ message = greet(30, "Alice")
 #    raise ValueError(f"Name has to be str, got {type(name)}")
 #ValueError: Name has to be str, got <class 'int'>
 ```
+
 # Why to use type hints
 
 We already know that types in Python does not affect the runtime. So some may ask a question why to bother and use type hints in Python if they are anyway ignored?
 
 1. Better development experience.
    Modern IDE's can recognize types in our code and recommend possible methods:
-   ![ide-screenshot](/images/20250831142539.png)
+   ![[Pasted image 20250831142539.png]]
 2. Improved code readability
 3. Less errors in the code (when combined with type checker)
 4. Self documenting code
 5. Easier refactors
 
-Last but not least, because type hints are not impacting the runtime, it means that you don't need to add all the possible types since the beginning. You can gradually add types as your program evolves, or when upgrading a legacy code. 
+Last but not least, because type hints are not impacting the runtime, it means that you don't need to add all the possible types since the beginning. You can gradually add types as your program evolves, or when upgrading a legacy code.
+
 # Simple Types
 
 Let's start with the simple types called built-ins. Or in other languages they may be know as primitives. Although it is convenient to thing about them as primitives, remember that everything in Python is an object! So it only helps imagination. They are not real primitives.  
@@ -313,6 +322,7 @@ Table 1.
 | `object` | an arbitrary object (`object` is the common base class) |
 
 Example:
+
 ```python
 # Variables
 age: int  # Type hint without value assignment
@@ -330,6 +340,7 @@ print(message)  # Output: Hello, Alice. You are 30 years old.
 ```
 
 Type hinting variable before assigning a value to it, useful in some cases for example when unpacking:
+
 ```python
 # Source: mypy.readthedocs.io
 # for mypy to infer the type of "cs" from:
@@ -338,43 +349,50 @@ a, b, *cs = 1, 2  # error: Need type annotation for "cs"
 rs: list[int]  # no assignment!
 p, q, *rs = 1, 2  # OK
 ```
+
 Annotating empty collections:
+
 ```python
 # Source: mypy.readthedocs.io
 l: list[int] = []       # Create empty list of int
 d: dict[str, int] = {}  # Create empty dictionary (str -> int)
 ``` 
+
 But `list` and `dict` are not on the list on our basic types. But before diving into beyond basic types, let's pause and talk about type checkers, as they are going to be very useful for us.
 
-## Type checkers
+# Type checkers
 
 Type checkers are the programs that read the code and validates if the types are correctly annotated. They are raising errors if there is something wrong. Their usage can help detect bugs in the code earlier, before running it.
-### Popular Type checkers
+
+## Popular Type checkers
 
 MyPy is one of the oldest and most renowned type checker in the Python world. it can be considered as a golden standard.
 
 In this article, I'm going to focuse and use only MyPy.
-#### [MyPy](https://www.mypy-lang.org/)
 
-![mypy](/posts/20250831143608.png)
+### [MyPy](https://www.mypy-lang.org/)
 
-#### [Pyright](https://microsoft.github.io/pyright/#/)
+![[Pasted image 20250831143608.png]]
+
+### [Pyright](https://microsoft.github.io/pyright/#/)
 
 If you are using a Pylance extension in VS Code, then you are also using Pyright, maybe even without knowing it, vecause Pylance incorporates Pyright
 
 
-![pyright](/posts/20250831143626.png)
+![[Pasted image 20250831143626.png]]
 
-#### [ty](https://docs.astral.sh/ty/)
+### [ty](https://docs.astral.sh/ty/)
 
 A new type checker, from Astral company, that gave us very good and popular tools lie `ruff` and `uv`
 
 Still in beta, but I recommend to have an eye on it, cause if it will be as good as other their tools, it may become very popular in the future.
 
-![ty](/posts/20250831143645.png)
-## Beyond basics
+![[Pasted image 20250831143645.png]]
+
+# Beyond basics
 
 Going back to types, unfortunately in bigger programs it becomes quickly obvious that simple types are not enough. Fortunately Python provides a lot of generic types ready to use. 
+
 ### Generic Types
 
 | Type                | Description                                                      |
@@ -422,6 +440,7 @@ We progress with our annotations, and we used more advanced generic types, but c
 In such situations aliases comes handy.
 
 Example:
+
 ```python
 from collections.abc import Callable, Iterable
 
@@ -458,6 +477,7 @@ from typing import TypeAlias
 
 Person: TypeAlias = tuple[str, int]
 ```
+
 ### Classes
 
 But operating on tuples can be very limiting. To contain data (and behavior, but not in this example) classes are perfect.
@@ -527,11 +547,13 @@ def celebrate_birthday(person: Person) -> Person:
 result = process_people(people, celebrate_birthday)
 print(result)
 ```
+
 ### Any
 
 `Any` is a special type that can represents anything. Because of that everything is allowed to be done with Any. Anything can be assigned to Any, and Any can be assigned to anything. All methods, operations etc. are allowed on Any.
 
 But be careful with Any, because it allows you to lie the type checkers. If used incorrectly, it can actually silence the issues, that can come up later as errors.
+
 ```python
 from typing import Any
 
@@ -548,7 +570,9 @@ Personally I find `Any` useful then you literally don't care about the content o
 def get_len(it: list[Any]) -> int:
 	return len(it)
 ```
+
 The above example does not have much of a practical value, but it conveys the idea. In this case, it literally does not matter what kind of the objects are inside the `it` list.
+
 ### Unions and Optionals
 
 Now, you already have a lot in you type hints arsenal. But what if you need something more unique, or what if argument passed to the function can be one of more types.
@@ -578,6 +602,7 @@ def find_person(people: Iterable[Person], name: str) -> Union[Person, None]:
 def greet_person(person: Person, greeting: Optional[str] = None) -> str: 
 	...
 ```
+
 ### Ellipsis
 
 In the example above you may drag attention for `...` three dots that are in the function bodies.
@@ -621,9 +646,8 @@ handle_person_action(greet, person) # Outputs: Hello, Alice!
 handle_person_action(lambda x: print(f"Person is {x.name}"), person) # Outputs: Person is Alice
 ```
 
-## Advice
-
 TODO:  Always use general types  as inputs and return as much specific types whenever possible.
+
 # Generics
 
 You know already generic types like `lits`, `tuple`, `dict`, `Iterable`, `Callable` etc. But what if you would like to create your own generic type? 
@@ -670,13 +694,14 @@ def get_first_element[T](items: list[T]) -> T: ...
 
 class Box(Generic[T]): ...
 ```
+
 # Abstract Base Classes
 
-In Python, **Abstract Base Classes (ABCs)** are similar to other languages, like Java, but at the same time they differ a lot. They allows to create a base class, that cannot be instantiated, it can only be used as a parent class for other classes. But just like regular classes sub-classes of an abstract class inherits all of its attributes. 
+In Python, **Abstract Base Classes (ABCs)** are similar to other languages, like Java, but at the same time they differ a lot. They allows to create a base class, that cannot be instantiated, it can only be used as a parent class for other classes. But just like regular classes sub-classes of an abstract class inherits all of its attributes. In a way they are like interfaces, where we define what methods needs to be implemented by the sub-class.
 
-Sub-classes of an abstract class have to implement methods that are decorated with `@abstractmethod` in the abstract class. 
+Sub-classes of an abstract class have to implement methods that are decorated with `@abstractmethod` in the abstract class. If a sub-class doesn't implement it becomes an abstract class itself. 
 
-What may be different from other languages, is that abstract class, can share it's logic with the sub-classes, define regular not abstract methods, and even allows to call and execute methods with abstract method decorator to be called from sub-classes (tough not recommended) 
+What may be different from other languages, is that abstract class, can share it's logic with the sub-classes, define regular not abstract methods, and even allows to call and execute methods with abstract method decorator to be called from sub-classes (tough not recommended).
 
 A simple example will make it more clear. 
 
@@ -737,17 +762,24 @@ talk(dog) # Output: Woof!
 talk(cat) # Output: Meow!
 ```
 
+`Speaker` defines method `speak`, but it contains only its signature (i.e. its name, parameters with types and what type it returns). In the body of the function there is only `Ellipsis`.
+
+Similarly like with ABC's, type checkers, now will check if the object passed to the `talk` function has `speak` method. If it has it will be considered as a sub-class of the `Speaker` and thus a valid type.
+
 # ABC vs Protocols
 
-When to use which? There is no strict answer for that. 
+When to use which? As usually there is no strict simple answer for that. Here I can only tell you my opinion about some pros and cons of bother and when I prefer to use one over the other. 
 
-TODO
+Abstract base classes in a very explicit way force other developers to follow the interface that they define. I find it very useful when using them for internal parts of an application that are not going to be exposed for others i.e. as a library. Because if you are writing a library that others import and use as a third party dependency, then protocols are much better fit. You usually don't want to make others to inherit from some internal abstract classes so they code could pass a type check. 
+
+Protocols are also good if you want to define attributes on the class. 
 
 If you need to use `isinstance` than you need to add decorator to the protocol class `@runtime_checkable` but even python documentation warns that this is not safe method:
 
-![protocols](/posts/20250903104653.png)
+![[Pasted image 20250903104653.png]]
 
-There is nothing to stop us to combine ABC and protocols in same class:
+As an extra, there is nothing to stop us to combine ABC and protocols in same class:
+
 ```python
 import abc
 import typing
@@ -778,13 +810,16 @@ if __name__ == "__main__":
 	name = sony.get_name()
 	print(name)
 ```
+
 # Problems
 
-## Type Hints don't impact run time, ... right?
+## Type Hints don't impact runtime, ... right?
+
+![[Pasted image 20250913091040.png]]
 
 I heard that so many times, that I started to believe that. And in a way it is true. Indeed types does not impact run time, as they don't matter for Python interpreter. This is something that I was trying to explain with the custom `Int` and `Str` classes at the beginning. 
 
-So where's the problem? Python is constructed in a way that everything after a colon in the function signature is in the parameters is a valid python code that can be evaluated. That means things there can break on the evaluation level.
+So where's the problem? Python is constructed in a way that everything after a colon in the function signature, in the parameters is a valid python code that can be evaluated. That means things there can break on the evaluation level.
 
 ```python
 def create_message(person: Person | None = None) -> str:
@@ -796,13 +831,14 @@ def create_message(person: Person | None = None) -> str:
 class Person: ...
 ```
 
-This example fails, because we are trying to use object `Person` that is yet not defined. Python is an interpreted language after all, and then the interpreter reads the signature of `create_message` function it does know nothing about `Person`
+This example fails, because we are trying to use object `Person` that is yet not defined. Python is an interpreted language after all, and when the interpreter reads the signature of `create_message` function it does know nothing about `Person`
 
 ```
 NameError: name 'Person' is not defined
 ```
 
-There are 2 solution for that. First we can just move `create_message` below definition of `Person` class. Second, often use, I we cannot or don't want to do that. Is to use string literal as a type. 
+There are 2 solution for that. First we can just move `create_message` below definition of `Person` class. but sometimes we cannot or don't want to do that. That's why there is second way to use string literal as a type. When using string literals, type checkers and IDE's still understand that it is `Person` object type, and at the same time for interpreter it is just a string, so it won't complain about `NameError`
+
 ```python
 def create_message(person: "Person" | None = None) -> str:
 	if person is None:
@@ -830,9 +866,9 @@ from typing import Union
 def create_message(person: Union["Person", None] = None) -> str: ...
 ```
 
-# Future
+## Future
 
-There is special module in python called `__future__`, it is rarely used, but sometimes it is useful. Creators of Python put there features that may impact alternate the standard behavior of python. On of those features is `annotations`
+There is special module in python called `__future__`, it is rarely used, but sometimes it is useful. Creators of Python put there features that may alternate the standard behavior of python. One of those features is `annotations`.
 
 ```python
 from __future__ import annotations
@@ -847,7 +883,7 @@ This looks like this:
 A -> b (from B) -> a (from A) Error!
 ```
 
-Such imports are rather easy to find even before running the code. That's we usually, circular imports happens in bigger projects where it's harder to track such dependencies:
+Such imports are rather easy to find even before running the code. That's why usually, circular imports happens in bigger projects where it's harder to track such dependencies:
 
 ```
 A -> b (from B) -> c (from C) -> d (from D) -> b (from B)
@@ -873,7 +909,7 @@ NameError: name 'Person' is not defined
 
 Because, we import `Person` only for type checks, during the run time this code is being evaluated and Python does not see the `Person` in the scope.
 
-That's why we wan't to use `from __future__ import annotations`, because, now even during the run time, it will be just a string literal that does nothing in a runtime.
+That's why we wan't to use `from __future__ import annotations`, because, now even during the run time, it will be just a string literal that does nothing at the runtime.
 
 ```python
 from __future__ import annotations
@@ -883,21 +919,67 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
 	from people import Person
 
-def create_message(person: Person | None = None) -> str:
+def create_message(person: Person | None = None) -> str: ...
 ```
-# Stubs
-
-TODO
 
 # Other typing features
 
 Many of the following features are not available in older versions of python. but There is a way to use them. Package [typing_extensions](https://pypi.org/project/typing-extensions/) was created to support new tying features in older python versions. 
+
 ## Overload
 
-Gives better annotations when types becomes more complex
+Better annotations when types becomes more complex. Sometimes methods can return different types, depends on what arguments are passed. In the below example, `get_info` method can return either string, integer or tuple of string and integer. But the logic of the function clearly makes distinction what types will be returned depends what arguments are passed. 
 
-TODO:
+Overloading allows you to narrow down types, and make it more precise. 
+
+```python
+from typing import overload, Literal, Union, Tuple, Self
+
+class Person:
+    def __init__(self, name: str, age: int) -> None:
+        self.name = name
+        self.age = age
+
+    def __str__(self) -> str:
+        return f"{type(self).__name__}(name={self.name}, age={self.age})"
+
+    def celebrate_birthday(self) -> Self:
+        self.age += 1
+        return self
+    
+    def change_name(self, new_name: str) -> Self:
+        self.name = new_name
+        return self
+
+    # Overloads for better type hints
+    @overload
+    def get_info(self, detail: Literal["name"]) -> str: ...
+    @overload
+    def get_info(self, detail: Literal["age"]) -> int: ...
+    @overload
+    def get_info(self) -> Tuple[str, int]: ...
+
+    # Actual implementation (only one real function)
+    def get_info(self, detail: Union[Literal["name"], Literal["age"], None] = None) -> Union[str, int, Tuple[str, int]]:
+        if detail == "name":
+            return self.name
+        elif detail == "age":
+            return self.age
+        else:
+            return (self.name, self.age)
+
+person = Person("Alice", 30)
+
+print(person.get_info())          # Outputs: ('Alice', 30)
+print(person.get_info("name"))    # Outputs: 'Alice'
+print(person.get_info("age"))     # Outputs: 30
+```
+
 ## Override
+
+For extra safety,  you can use `@override` decorator. It has couple benefits. First it protects you from typos, which can actually leads to some unexpected an hard to find bugs, because you class still will be working, but the method that you think is being called, is not. Instead Python will be using a method from the parent class. 
+
+Apart from typos, it also automatically documents you code, and make it for others easier to understand. I know that there are IDE's like [PyCharm](https://www.jetbrains.com/pycharm), that actually can gives you same information, but that tights you to usage of a specific IDE, and people are using various of code editors for their work. Plus with decorator you can add `MyPy` or other type checker to your CI process. 
 
 ```python
 import abc
@@ -912,17 +994,19 @@ class Dog(Animal):
 	def speak(self) ->str: ...
 
 class Cat(Animal):
-	def speak(self) -> str: ... # Error!
+	def speak(self) -> str: ... # Error! (becasue we didn't use @override)
 	
 class Fish(Animal):
 	@override
-	def speek(self) -> str: ... # Error!
+	def speek(self) -> str: ... # Error! (because of typo in speak)
 ```
 
-Works only with the extra flag passed to mypy: [`--enable-error-code explicit-override`](https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-enable-error-code)
+But that doesn't work by default. You need to set specific type checker settings or add an extra flag like [`--enable-error-code explicit-override`](https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-enable-error-code) or [`--strict`](https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-strict)
+
 ## Self
 
-A convenient way of annotating that method returns instance itself.
+A convenient way of annotating that method returns instance itself. 
+
 ```python
 from typing import Self
 
@@ -947,16 +1031,29 @@ person.celebrate_birthday().change_name("Rachel")
 
 print(person) # Outputs: Person(name=Rachel, age=31)
 ```
-## Annotation
 
-TODO
+It was introduced in Python 3.11.  Before `Self` to achieve the same thing you need to use a string literal:
+
+```python
+class Person:
+	def __init__(self, name: str, age: int) -> None: ...
+	def __str__(self) -> str: ...
+
+	def celebrate_birthday(self) -> "Person": ...
+	
+	def change_name(self, new_name: str) -> "Person": ...
+```
 
 # MyPy Misc
 
 ## Cast
-- `x or y` won't work in MyPy (use cast?) 
+
+Cast is another way to trick MyPy to think that certain expression is of specific type. You have to be very careful when using it, because YOU are telling MyPy what is the type, and if you make a mistake in type, MyPy will not catch it. Important to mention `cast` unlike in other languages, does not change value from one type to the other, for example integer won't be converted to string, even implicitly (:wink: to JS) 
+
+I find it useful everywhere where you as a human knows by the power of the logic that something HAS to be of a specific type, but MyPy doesn't. For example when using `or` operator in the old fashion manner as a replacement for ternary operator.  
 
 ```python
+# Source: https://mypy.readthedocs.io/en/stable/type_narrowing.html#limitations
 from typing import cast
 
 class C:
@@ -968,8 +1065,38 @@ def f(a: C | None, b: C | None) -> C:
         return cast(C, a or b)  # Type narrowed to C, because as a human I can 
                                 # understand that this has to be C
     return C()
+```
+
+In the above example, as humans we know that function `f` has to return object `C`. But MyPy cannot understand the logic there and thinks that it can be `C` or `None`. Using cast force MyPy to think that only `C` can be returned.
+
+Cast can also be useful when dealing with external API's or libraries that does not support fully types of can't support them, like `request.json` cannot possibly know what types in the returned JSON are.
+
+```python
+# Source: https://swapi.info
+import requests
+
+url = "https://swapi.info/api/starships/12"
+response = requests.get(url)
+starship = response.json()
+print("Cost: ", starship["cost_in_credits"] / 1000)
+```
+
+Without extra annotation, `starship` is a type of `Any`. Which is a little bit problematic, MyPy won't throw any errors, because as we know all operations are allowed on `Any`. Without reading the API documentation, someone could think that  `cost_in_credits` returns a number, but in fact that API returns everything as string.
 
 ```
+TypeError: unsupported operand type(s) for /: 'str' and 'int'
+```
+
+Solution for that can be usage o either annotating `starship` variable or usage of cast:
+
+```python
+starship: dict[str, str] = response.json()
+# OR
+starship = cast(dict[str, str], response.json())
+```
+
+Although for production code, I would actually recommend using [Pydantic](https://docs.pydantic.dev/latest/) models. They give you better annotation, especially in API that can return various types, and they give you option for validation. Plus they give you tons of other benefits, but that's the material for another article. 
+
 ## Flags
 - [`--disallow-untyped-defs`](https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-disallow-untyped-defs)
 - [`--enable-error-code explicit-override`](https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-enable-error-code)
@@ -981,6 +1108,7 @@ TODO
 
 # References
 
+General
 - Type Theory: https://en.wikipedia.org/wiki/Type_theory
 - Type System: https://en.wikipedia.org/wiki/Type_system
 - Data Type: https://en.wikipedia.org/wiki/Data_type
@@ -1001,3 +1129,6 @@ YouTube Videos
 - [Python Tutorial: Type Hints - From Basic Annotations to Advanced Generics](https://www.youtube.com/watch?v=RwH2UzC2rIo)
 - [Python Tutorial: Duck Typing and Asking Forgiveness, Not Permission (EAFP)](https://www.youtube.com/watch?v=x3v9zMX1s4s)
 - [PyWaw #117 What NOT TO DO when type hinting in Python?](https://www.youtube.com/watch?v=4y-8wokSpfM&t) 
+
+Examples:
+- 

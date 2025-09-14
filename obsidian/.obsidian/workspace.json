@@ -1,0 +1,241 @@
+{
+  "main": {
+    "id": "e6737fc6dfeb1e36",
+    "type": "split",
+    "children": [
+      {
+        "id": "c8b7d4a859e3971d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "648d788afdd04cc5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "posts/Python - Type Hints - Introduction.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Python - Type Hints - Introduction"
+            }
+          },
+          {
+            "id": "73c2605f1789b69f",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9313c8309f3421c4",
+    "type": "split",
+    "children": [
+      {
+        "id": "801631b968dd161a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6ad830772cefdf2d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": true
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "e79adbf2fa9abb2b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "64c5579f016481cb",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 254.5
+  },
+  "right": {
+    "id": "8b837642ddf63891",
+    "type": "split",
+    "children": [
+      {
+        "id": "d05c3be029790540",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "227dbf4cda9a6eea",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "drafts/Type Hints.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Type Hints"
+            }
+          },
+          {
+            "id": "9be7c689114d2305",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Python 365 Ideas.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Python 365 Ideas"
+            }
+          },
+          {
+            "id": "8357e53d124be1c6",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "a1338b6c923f550a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "c71a5efde6e7ee29",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:Create new base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "73c2605f1789b69f",
+  "lastOpenFiles": [
+    "posts/Python - Type Hints - Introduction copy.md",
+    "posts/Python - Type Hints - Introduction.md",
+    "posts/Python - Variables.md",
+    "posts/Python - Type Hints - Stubs.md",
+    "posts/Python - Type Hints - Narrowing Types.md",
+    "posts/Python - Simple CLI - sys.argv.md",
+    "bases/python.base",
+    "Untitled.md",
+    "notes/Ideas.md",
+    "notes/Python 365 Ideas.md",
+    "_images/Pasted image 20250913091040.png",
+    "bases/type hints.base",
+    "posts/Type Hints Presentation Agenda.md",
+    "images",
+    "posts/Statement vs Expression.md",
+    "_templates/post.md",
+    "notes/Links for newsletter.md",
+    "notes/How to blog.md",
+    "bases",
+    "_images/Pasted image 20250831141437.png",
+    "_images/Pasted image 20250903104653.png",
+    "notes",
+    "_images",
+    "posts/python-type-hints.md",
+    "_images/Pasted image 20250901085342.png",
+    "_images/Pasted image 20250831143645.png",
+    "_images/Pasted image 20250831143626.png",
+    "_images/Pasted image 20250831143608.png",
+    "templates/blog-post.md",
+    "templates/blog post.md",
+    "_templates",
+    "posts/python-type-hints.md~",
+    "_images/Pasted image 20250831142539.png",
+    "().md",
+    "Untitled.canvas",
+    "2025-08-29.md",
+    "drafts/Recommended Python Sources.md",
+    "Type Hints Presentation.md~",
+    "4913",
+    "What.md",
+    "My Obsidian.md",
+    "Welcome.md"
+  ]
+}

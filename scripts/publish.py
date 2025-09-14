@@ -1,0 +1,3 @@
+"""
+Publish page on server
+"""

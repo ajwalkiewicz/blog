@@ -1,0 +1,15 @@
+filters:
+  and:
+    - '!file.inFolder("_templates")'
+    - '!file.inFolder("_images")'
+views:
+  - type: table
+    name: Table
+    filters:
+      and:
+        - file.tags.contains("python")
+  - type: table
+    name: View
+    filters:
+      and:
+        - file.tags.contains("python")
