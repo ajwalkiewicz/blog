@@ -36,7 +36,7 @@ def transform_file(source: Path, destination: Path) -> Path:
     with source.open("r") as infile, destination.open("w") as outfile:
         for line in infile:
             if is_obsidian_link(line):
-                print(f"Found link in {line}")
+                print(f"Found link in {line.strip()}")
                 line = transform_link(line, "/posts/images")
             outfile.write(line)
     

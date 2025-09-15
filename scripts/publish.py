@@ -1,3 +1,0 @@
-"""
-Publish page on server
-"""

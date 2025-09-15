@@ -2,7 +2,7 @@
 title: Python - Type Hints - Introduction
 description: My subjective introduction to Python type hints
 date: 2025-09-02T22:55:17+00:00
-draft: true
+draft: false
 tags:
   - python
   - type-hints

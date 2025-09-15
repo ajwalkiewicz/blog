@@ -2,7 +2,7 @@
 title: Python - Type Hints - Introduction
 description: My subjective introduction to Python type hints
 date: 2025-09-02T22:55:17+00:00
-draft: true
+draft: false
 tags:
   - python
   - type-hints
@@ -773,6 +773,8 @@ When to use which? As usually there is no strict simple answer for that. Here I 
 Abstract base classes in a very explicit way force other developers to follow the interface that they define. I find it very useful when using them for internal parts of an application that are not going to be exposed for others i.e. as a library. Because if you are writing a library that others import and use as a third party dependency, then protocols are much better fit. You usually don't want to make others to inherit from some internal abstract classes so they code could pass a type check. 
 
 Protocols are also good if you want to define attributes on the class. 
+
+TODO
 
 If you need to use `isinstance` than you need to add decorator to the protocol class `@runtime_checkable` but even python documentation warns that this is not safe method:
 

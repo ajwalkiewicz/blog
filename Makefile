@@ -1,9 +1,9 @@
-.PHONY: setup check-uv build test clean clean_venv clean_build clean_cache format type
+.PHONY: setup check-uv clean clean_venv clean_cache format check_format \
+	check_type prepare publish \
 
 setup: check-uv uv.lock
 	@echo "Setting up project..."
 	uv sync
-
 	
 check-uv:
 	@if ! command -v uv > /dev/null; then \
@@ -12,30 +12,11 @@ check-uv:
 		curl -LsSf https://astral.sh/uv/install.sh | sh; \
 	fi
 
-
-test: tests/test_*.py
-	@echo "Running tests..."
-	@if ! uv run pytest -m "not slow"; then \
-		echo "Tests failed. Building project not possible."; \
-		exit 1; \
-	fi
-
-test_all: tests/test_*.py
-	@echo "Running all tests..."
-	@if ! uv run pytest; then \
-		echo "Tests failed. Building project not possible."; \
-		exit 1; \
-	fi
-
-clean: clean_venv clean_build clean_cache
+clean: clean_venv clean_cache
 
 clean_venv:
 	@echo "Removing virtual environment.."
 	rm -rf .venv
-
-clean_build:
-	@echo "Removing build files..."
-	rm -rf dist/
 
 clean_cache:
 	@echo "Removing all cache files and directories int the project..." 
@@ -45,10 +26,18 @@ format:
 	@echo "Formatting project files with ruff..."
 	uv run ruff format
 
-check:
+check_format:
 	@echo "Checking project files with ruff..."
 	uv run ruff check
 
-type:
+check_type:
 	@echo "checking typing with mypy..."
 	uv run mypy .
+
+prepare:
+	@echo "coping files to the hugo page"
+	uv run ./scripts/move.py
+
+publish: scripts/publish.sh
+	@echo "publishing changes..."
+	./scripts/publish.sh

@@ -25,10 +25,14 @@
             "id": "73c2605f1789b69f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "posts/Python - Type Hints - Introduction.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Python - Type Hints - Introduction"
             }
           }
         ],
@@ -153,12 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "posts/Python - Type Hints - Introduction.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Python - Type Hints - Introduction"
             }
           },
           {
@@ -195,11 +200,11 @@
   },
   "active": "73c2605f1789b69f",
   "lastOpenFiles": [
+    "posts/Python - Type Hints - Narrowing Types.md",
+    "posts/Python - Type Hints - Stubs.md",
     "posts/Python - Type Hints - Introduction copy.md",
     "posts/Python - Type Hints - Introduction.md",
     "posts/Python - Variables.md",
-    "posts/Python - Type Hints - Stubs.md",
-    "posts/Python - Type Hints - Narrowing Types.md",
     "posts/Python - Simple CLI - sys.argv.md",
     "bases/python.base",
     "Untitled.md",
