@@ -1132,5 +1132,5 @@ YouTube Videos
 - [Python Tutorial: Duck Typing and Asking Forgiveness, Not Permission (EAFP)](https://www.youtube.com/watch?v=x3v9zMX1s4s)
 - [PyWaw #117 What NOT TO DO when type hinting in Python?](https://www.youtube.com/watch?v=4y-8wokSpfM&t) 
 
-Examples:
-- 
+Code Examples:
+- [Python - Type Hints - Introduction](https://github.com/ajwalkiewicz/blog/tree/master/examples/Python%20-%20Type%20Hints%20-%20Introduction)
